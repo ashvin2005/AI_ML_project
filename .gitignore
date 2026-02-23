@@ -43,7 +43,6 @@ Thumbs.db
 
 # Model files (large binaries)
 *.pkl
-*.joblib
 
 # Dataset (too large for GitHub)
 WELFake_Dataset.csv

@@ -1,12 +1,14 @@
-import sys
 import os
 import re
+import string
 
 import streamlit as st
 import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
+from sklearn.svm import LinearSVC
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.model_selection import train_test_split
 
 def preprocess_text(text):
     import string
@@ -20,16 +22,43 @@ def preprocess_text(text):
 
 MODEL_PATH = "svm_model.joblib"
 VECTORIZER_PATH = "tfidf_vectorizer.joblib"
+DATASET_PATH = "WELFake_Dataset.csv"
 
+@st.cache_resource(show_spinner="Loading model...")
 def find_model():
-    paths = [
-        (MODEL_PATH, VECTORIZER_PATH),
-        ("models/" + MODEL_PATH, "models/" + VECTORIZER_PATH),
-    ]
-    for m_path, v_path in paths:
-        if os.path.exists(m_path) and os.path.exists(v_path):
-            return joblib.load(m_path), joblib.load(v_path)
-    return None, None
+    if os.path.exists(MODEL_PATH) and os.path.exists(VECTORIZER_PATH):
+        return joblib.load(MODEL_PATH), joblib.load(VECTORIZER_PATH)
+
+    if not os.path.exists(DATASET_PATH):
+        return None, None
+
+    df = pd.read_csv(DATASET_PATH)
+    df["title"] = df["title"].fillna("")
+    df["text"] = df["text"].fillna("")
+    df["content"] = df["title"] + " " + df["text"]
+    df = df[df["content"].str.strip().astype(bool)].reset_index(drop=True)
+    df["clean"] = df["content"].apply(preprocess_text)
+
+    vectorizer = TfidfVectorizer(
+        stop_words="english",
+        max_features=10000,
+        ngram_range=(1, 2),
+        min_df=3,
+        max_df=0.95,
+        sublinear_tf=True,
+    )
+    X = vectorizer.fit_transform(df["clean"])
+    y = df["label"]
+
+    X_train, _, y_train, _ = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+    model = CalibratedClassifierCV(LinearSVC(C=1.0, max_iter=2000, random_state=42), cv=3)
+    model.fit(X_train, y_train)
+
+    joblib.dump(model, MODEL_PATH)
+    joblib.dump(vectorizer, VECTORIZER_PATH)
+
+    return model, vectorizer
 
 def check_legitimacy(text):
     text_lower = text.lower()
