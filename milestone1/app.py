@@ -103,8 +103,10 @@ def predict(text, model, vectorizer):
     
     strong_legit, legit_score, fake_score = check_legitimacy(text)
     
-    proba_fake = proba[1]
-    proba_real = proba[0]
+    # WELFake label encoding: 0=FAKE, 1=REAL
+    # CalibratedClassifierCV returns proba in classes_ order → [P(FAKE), P(REAL)]
+    proba_fake = proba[0]
+    proba_real = proba[1]
     
    
     if strong_legit >= 1:
