@@ -1,4 +1,4 @@
-# Python
+
 __pycache__/
 *.py[cod]
 *$py.class
@@ -20,33 +20,32 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual environments
+.env
 .env.example
 .venv
 env/
 venv/
 ENV/
 
-# IDEs
+
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+
 .DS_Store
 Thumbs.db
 
-# Logs
+
 *.log
 
-# Model files (large binaries)
+
 *.pkl
 
-# Dataset (too large for GitHub)
+
 WELFake_Dataset.csv
 data/
 
-# Jupyter
 .ipynb_checkpoints/
