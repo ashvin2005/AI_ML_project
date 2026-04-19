@@ -283,11 +283,10 @@ Figure~\ref{fig:agent_architecture} illustrates the agent workflow.
 \small
 Article Input\\[4pt]
 $\downarrow$\\[4pt]
-Credibility Predictor (SVM)\\[4pt]
+Parallel Processing\\[4pt]
+(Predictor + Retriever)\\[4pt]
 $\downarrow$\\[4pt]
-Fact-Check Retriever (RAG)\\[4pt]
-$\downarrow$\\[4pt]
-Reasoner Synthesis (Groq LLM)\\[4pt]
+Reasoner Synthesis\\[4pt]
 $\downarrow$\\[4pt]
 PDF Report Generation
 }}
@@ -339,29 +338,8 @@ Preliminary testing demonstrates the agent's ability to enhance credibility asse
 % ---------- REFERENCES ----------
 \begin{thebibliography}{15}
 
-\bibitem{vosoughi2018spread}
-S. Vosoughi, D. Roy, and S. Aral, ``The spread of true and false news online,'' \textit{Science}, vol. 359, no. 6380, pp. 1146--1151, 2018.
-
-\bibitem{allcott2017social}
-H. Allcott and M. Gentzkow, ``Social media and fake news in the 2016 election,'' \textit{Journal of Economic Perspectives}, vol. 31, no. 2, pp. 211--236, 2017.
-
-\bibitem{horne2017just}
-B. Horne and S. Adali, ``This just in: Fake news packs a lot in title, uses simpler, repetitive content in text body, more similar to satire than real news,'' in \textit{Proc. AAAI ICWSM}, 2017.
-
-\bibitem{shu2017fake}
-K. Shu, A. Sliva, S. Wang, J. Tang, and H. Liu, ``Fake news detection on social media: A data mining perspective,'' \textit{ACM SIGKDD Explorations Newsletter}, vol. 19, no. 1, pp. 22--36, 2017.
-
-\bibitem{ahmed2017detection}
-H. Ahmed, I. Traore, and S. Saad, ``Detection of online fake news using N-gram analysis and machine learning techniques,'' in \textit{Proc. ISDDC}, Springer, 2017, pp. 127--138.
-
-\bibitem{verma2021welfake}
-P. K. Verma, P. Agrawal, I. Amorim, and R. Prodan, ``WELFake: Word embedding over linguistic features for fake news detection,'' \textit{IEEE Transactions on Computational Social Systems}, vol. 8, no. 4, pp. 881--893, 2021.
-
 \bibitem{sklearn}
 Scikit-learn Developers, ``scikit-learn: Machine Learning in Python — User Guide,'' 2024. [Online]. Available: \url{https://scikit-learn.org/stable/user_guide.html}
-
-\bibitem{streamlit}
-Streamlit Inc., ``Streamlit API Reference,'' 2024. [Online]. Available: \url{https://docs.streamlit.io/}
 
 \bibitem{pandas}
 The Pandas Development Team, ``pandas: Python Data Analysis Library — Documentation,'' 2024. [Online]. Available: \url{https://pandas.pydata.org/docs/}
@@ -383,7 +361,7 @@ UKP Lab, ``Sentence Transformers: Multilingual Sentence, Paragraph, and Image Em
 
 \bibitem{faiss}
 Facebook AI Research, ``FAISS: A library for efficient similarity search and clustering of dense vectors,'' 2024. [Online]. Available: \url{https://faiss.ai/}
-
+ 
 \end{thebibliography}
 
 % ---------- APPENDIX ----------
@@ -403,7 +381,7 @@ The complete source code, trained models, and deployment configuration are avail
 AI_ML_project/
 ├── app_final.py              # Integrated Streamlit web application
 ├── requirements.txt          # Python dependencies
-├── Procfile                  # Heroku deployment configuration
+├── Procfile                
 ├── runtime.txt               # Python runtime version
 ├── setup.sh                  # Setup script
 ├── latex_report/
