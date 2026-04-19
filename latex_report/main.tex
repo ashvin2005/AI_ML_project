@@ -283,10 +283,11 @@ Figure~\ref{fig:agent_architecture} illustrates the agent workflow.
 \small
 Article Input\\[4pt]
 $\downarrow$\\[4pt]
-Parallel Processing\\[4pt]
-(Predictor + Retriever)\\[4pt]
+Credibility Predictor (SVM)\\[4pt]
 $\downarrow$\\[4pt]
-Reasoner Synthesis\\[4pt]
+Fact-Check Retriever (RAG)\\[4pt]
+$\downarrow$\\[4pt]
+Reasoner Synthesis (Groq LLM)\\[4pt]
 $\downarrow$\\[4pt]
 PDF Report Generation
 }}

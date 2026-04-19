@@ -59,7 +59,7 @@ graph TD
 
 ## Key Features
 
-- **Parallel Agentic Workflow**: Built with LangGraph to process ML and evidence streams concurrently, reducing latency.
+- **Agentic Workflow**: Built with LangGraph — four sequential nodes (predict → retrieve → reason → report) with explicit state management.
 - **Live RAG Integration**: Real-time scraper and vector-based retrieval for fresh fact-checks.
 - **Premium Dark-Blue Dashboard**: A custom-styled Streamlit UI with interactive charts, metrics, and progress bars.
 - **Automated PDF Reporting**: Generates a professional deep-dive report (via FPDF2) for offline sharing.
@@ -113,7 +113,7 @@ pip install -r requirements.txt
    streamlit run app_final.py
    ```
 2. Enter your **Groq API Key** in the sidebar.
-3. Paste an article and click **"Run AI Analysis"**.
+3. Paste an article and click **"Run Analysis"**.
 
 ---
 
@@ -129,8 +129,7 @@ pip install -r requirements.txt
 │       ├── graph.py          # LangGraph workflow definition
 │       ├── retriever.py      # Live RAG & Scraping logic
 │       └── reasoner.py       # Llama 3.1 reasoning templates
-├── app_final.py              # Integrated Premium UI (Final)
-├── ARCHITECTURE.md           # Deep dive into NLP pipeline
+├── app_final.py              # Integrated UI (Final)
 └── requirements.txt          # Full project dependencies
 ```
 
