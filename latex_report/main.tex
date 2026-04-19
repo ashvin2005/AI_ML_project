@@ -28,7 +28,7 @@
 \begin{document}
 
 % ---------- TITLE ----------
-\title{Intelligent News Credibility Analysis Using\\Machine Learning and Natural Language Processing}
+\title{Intelligent News Credibility Analysis:\\Machine Learning Classification and Agentic Monitoring Framework}
 
 \author{
 \IEEEauthorblockN{Ashvin Tiwari, Abhishek Varma, Dhruv Sareen, Krish Amit Modi}
@@ -41,11 +41,11 @@ Semester 4 — AI/ML Project\\}
 
 % ---------- ABSTRACT ----------
 \begin{abstract}
-The rapid spread of misinformation across digital platforms presents a significant challenge to public trust and information integrity. This paper presents a machine learning-based system for automatic classification of news articles as real or fake. We use the WELFake dataset comprising 72,134 labelled news articles and extract textual features using Term Frequency-Inverse Document Frequency (TF-IDF) vectorization with bigram support. Four classification models are trained and evaluated: Logistic Regression, Linear Support Vector Machine (SVM), Decision Tree, and Random Forest. The Linear SVM model achieves the best overall performance with an accuracy of 96.55\%, precision of 96.22\%, F1-score of 96.66\%, and ROC-AUC of 96.36\%. The trained model is deployed as an interactive web application using Streamlit, enabling real-time credibility analysis of user-submitted news articles with explainable outputs.
+The rapid spread of misinformation across digital platforms presents a significant challenge to public trust and information integrity. This paper presents a comprehensive machine learning-based system for automatic classification of news articles as real or fake, extended with an agentic framework for autonomous misinformation monitoring. We use the WELFake dataset comprising 72,134 labelled news articles and extract textual features using Term Frequency-Inverse Document Frequency (TF-IDF) vectorization with bigram support. Four classification models are trained and evaluated: Logistic Regression, Linear Support Vector Machine (SVM), Decision Tree, and Random Forest. The Linear SVM model achieves the best overall performance with an accuracy of 96.55\%, precision of 96.22\%, F1-score of 96.66\%, and ROC-AUC of 96.36\%. The trained model is deployed as an interactive web application using Streamlit, enabling real-time credibility analysis of user-submitted news articles with explainable outputs. Building upon this foundation, Milestone 2 extends the system into an agentic misinformation monitoring framework that autonomously retrieves fact-checking sources, performs AI-driven credibility reasoning, and generates comprehensive PDF reports for in-depth analysis.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Fake news detection, natural language processing, TF-IDF, support vector machine, text classification, misinformation, Streamlit.
+Fake news detection, natural language processing, TF-IDF, support vector machine, text classification, misinformation, Streamlit, agentic systems, fact-checking, AI reasoning, LangGraph.
 \end{IEEEkeywords}
 
 % ---------- INTRODUCTION ----------
@@ -57,13 +57,14 @@ The consequences of unchecked misinformation are severe: it can influence electi
 
 Automated fake news detection using machine learning and natural language processing (NLP) offers a scalable solution. By learning the linguistic patterns, writing style, and structural features that distinguish real news from fabricated content, ML models can provide instant credibility assessments.
 
-In this paper, we present a complete end-to-end pipeline for fake news detection. Our contributions are as follows:
+In this paper, we present a complete end-to-end pipeline for fake news detection, extended into an agentic misinformation monitoring system. Our contributions are as follows:
 
 \begin{itemize}
     \item A comprehensive text preprocessing and feature extraction pipeline using TF-IDF with bigram support.
     \item A comparative evaluation of four classification models on the WELFake dataset.
     \item Selection of the Linear SVM model with 96.55\% accuracy as the optimal classifier.
     \item Deployment of the model as a live web application with explainable outputs.
+    \item Extension into an agentic framework using LangGraph for autonomous misinformation monitoring, incorporating fact-checking retrieval, AI-driven reasoning, and automated PDF report generation.
 \end{itemize}
 
 % ---------- RELATED WORK ----------
@@ -78,9 +79,9 @@ Ahmed et al. \cite{ahmed2017detection} demonstrated that TF-IDF features combine
 In our work, we use the WELFake dataset sourced from Kaggle. We evaluate multiple classification models on this dataset and deploy the best performing model as an accessible web application.
 
 % ---------- METHODOLOGY ----------
-\section{Methodology}
+\section{Milestone 1: Machine Learning Classification}
 
-Figure~\ref{fig:pipeline} illustrates the overall architecture of our system.
+Figure~\ref{fig:pipeline} illustrates the overall architecture of our Milestone 1 system, while Figure~\ref{fig:agent_architecture} shows the extended Milestone 2 agentic framework.
 
 \begin{figure}[ht]
 \centering
@@ -94,13 +95,13 @@ Best Model Selection (Linear SVM)\\[4pt]
 $\downarrow$\\[4pt]
 Streamlit Web Application
 }}
-\caption{System architecture pipeline.}
+\caption{Milestone 1: System architecture pipeline.}
 \label{fig:pipeline}
 \end{figure}
 
 \subsection{Dataset Description}
 
-We use the WELFake dataset [6], which contains 72,134 news articles with binary labels: 0 (Fake) and 1 (Real). The dataset is composed of articles aggregated from four sources to ensure diversity in topics, writing styles, and domains
+We use the WELFake dataset \cite{verma2021welfake}, which contains 72,134 news articles with binary labels: 0 (Fake) and 1 (Real). The dataset is composed of articles aggregated from four sources to ensure diversity in topics, writing styles, and domains
 
 \begin{table}[ht]
 \centering
@@ -258,10 +259,84 @@ We presented an end-to-end system for automatic fake news detection using machin
 
 The model is deployed as a live Streamlit web application that provides instant credibility verdicts with explainable outputs including confidence scores and feature-level explanations.
 
-Future work for Milestone 2 includes extending the system into an agentic misinformation monitoring framework that autonomously monitors live news feeds, cross-references claims against trusted sources, and tracks the temporal propagation of misinformation narratives.
+Building upon this foundation, Milestone 2 extends the system into an agentic misinformation monitoring framework that autonomously monitors live news feeds, cross-references claims against trusted sources, and tracks the temporal propagation of misinformation narratives.
+
+% ---------- MILESTONE 2: AGENTIC MISINFORMATION MONITORING ----------
+\section{Milestone 2: Agentic Misinformation Monitoring Framework}
+
+\subsection{System Architecture}
+
+Milestone 2 transforms the static classification model into an autonomous agent capable of proactive misinformation detection and analysis. The system employs LangGraph to orchestrate a multi-step workflow consisting of four specialized agents:
+
+\begin{enumerate}
+    \item \textbf{Credibility Predictor}: Utilizes the trained Linear SVM model from Milestone 1 to provide initial credibility assessments with confidence scores.
+    \item \textbf{Fact-Check Retriever}: Performs web scraping and semantic search across fact-checking websites (e.g., Snopes, FactCheck.org) to gather relevant verification sources.
+    \item \textbf{Credibility Reasoner}: Employs Groq's Llama 3.1 model for advanced reasoning, synthesizing prediction results, retrieved sources, and contextual analysis to produce comprehensive credibility evaluations.
+    \item \textbf{Report Generator}: Creates detailed PDF reports containing article summaries, credibility indicators, risk assessments, and supporting evidence.
+\end{enumerate}
+
+Figure~\ref{fig:agent_architecture} illustrates the agent workflow.
+
+\begin{figure}[ht]
+\centering
+\fbox{\parbox{0.45\textwidth}{\centering
+\small
+Article Input\\[4pt]
+$\downarrow$\\[4pt]
+Parallel Processing\\[4pt]
+(Predictor + Retriever)\\[4pt]
+$\downarrow$\\[4pt]
+Reasoner Synthesis\\[4pt]
+$\downarrow$\\[4pt]
+PDF Report Generation
+}}
+\caption{Milestone 2: Agentic framework architecture.}
+\label{fig:agent_architecture}
+\end{figure}
+
+\subsection{Key Components}
+
+\subsubsection{Fact-Check Retrieval}
+
+The retrieval system employs dual strategies for source verification:
+
+\begin{itemize}
+    \item \textbf{Web Scraping}: Automated crawling of fact-checking sites using BeautifulSoup, with intelligent keyword extraction from article content.
+    \item \textbf{Semantic Search}: Optional FAISS-based vector search using Sentence Transformers for retrieving semantically similar fact-checks from a knowledge base.
+\end{itemize}
+
+\subsubsection{AI-Driven Reasoning}
+
+The reasoner component leverages large language models to perform nuanced credibility analysis:
+
+\begin{itemize}
+    \item Cross-references article claims against retrieved sources
+    \item Identifies credibility indicators (positive/negative)
+    \item Assesses risk factors and misinformation patterns
+    \item Provides confidence assessments with detailed reasoning
+\end{itemize}
+
+\subsubsection{Automated Reporting}
+
+Generated PDF reports include:
+
+\begin{itemize}
+    \item Article summary and credibility verdict
+    \item Confidence metrics and probability distributions
+    \item Supporting sources with snippets
+    \item Ethical disclaimers and verification recommendations
+\end{itemize}
+
+\subsection{Integration and Deployment}
+
+The agentic system is integrated into an enhanced Streamlit web application that provides users with both instant predictions from the Milestone 1 model and comprehensive analysis reports from the Milestone 2 agent. The framework is designed for scalability, with lazy loading of models and error handling to ensure robustness in production environments.
+
+\subsection{Evaluation and Impact}
+
+Preliminary testing demonstrates the agent's ability to enhance credibility assessments through multi-source verification. The system successfully identifies high-risk misinformation patterns and provides actionable insights for manual verification. Future enhancements include real-time news feed monitoring and temporal trend analysis for emerging misinformation narratives.
 
 % ---------- REFERENCES ----------
-\begin{thebibliography}{9}
+\begin{thebibliography}{15}
 
 \bibitem{vosoughi2018spread}
 S. Vosoughi, D. Roy, and S. Aral, ``The spread of true and false news online,'' \textit{Science}, vol. 359, no. 6380, pp. 1146--1151, 2018.
@@ -296,6 +371,18 @@ NumPy Developers, ``NumPy Documentation,'' 2024. [Online]. Available: \url{https
 \bibitem{joblib}
 Joblib Developers, ``Joblib: Running Python functions as pipeline jobs,'' 2024. [Online]. Available: \url{https://joblib.readthedocs.io/}
 
+\bibitem{langgraph}
+LangChain Inc., ``LangGraph: Build language agents as graphs,'' 2024. [Online]. Available: \url{https://langchain-ai.github.io/langgraph/}
+
+\bibitem{groq}
+Groq Inc., ``Groq API Documentation,'' 2024. [Online]. Available: \url{https://console.groq.com/docs/}
+
+\bibitem{sentence_transformers}
+UKP Lab, ``Sentence Transformers: Multilingual Sentence, Paragraph, and Image Embeddings,'' 2024. [Online]. Available: \url{https://www.sbert.net/}
+
+\bibitem{faiss}
+Facebook AI Research, ``FAISS: A library for efficient similarity search and clustering of dense vectors,'' 2024. [Online]. Available: \url{https://faiss.ai/}
+
 \end{thebibliography}
 
 % ---------- APPENDIX ----------
@@ -313,24 +400,43 @@ The complete source code, trained models, and deployment configuration are avail
 
 \begin{lstlisting}
 AI_ML_project/
-  app.py               # Streamlit web application
-  model.ipynb          # Model training notebook
-  WELFake_Dataset.csv  # Training dataset
-  svm_model.joblib     # Trained SVM model
-  tfidf_vectorizer.joblib  # Fitted TF-IDF vectorizer
-  requirements.txt     # Python dependencies
-  README.md            # Project documentation
-  main 2.tex           # This LaTeX report
+├── app_final.py              # Integrated Streamlit web application
+├── requirements.txt          # Python dependencies
+├── Procfile                  # Heroku deployment configuration
+├── runtime.txt               # Python runtime version
+├── setup.sh                  # Setup script
+├── latex_report/
+│   └── main.tex              # This LaTeX report
+├── milestone1/
+│   ├── app.py                # Milestone 1 Streamlit app
+│   ├── model.ipynb           # Model training notebook
+│   ├── README.md             # Milestone 1 documentation
+│   ├── svm_model.joblib      # Trained SVM model
+│   └── tfidf_vectorizer.joblib # Fitted TF-IDF vectorizer
+└── milestone2/
+    └── agent/
+        ├── __init__.py
+        ├── graph.py          # LangGraph agent orchestration
+        ├── predictor.py      # Credibility predictor using M1 model
+        ├── retriever.py      # Fact-checking retrieval
+        ├── reasoner.py       # AI-driven reasoning with Groq
+        └── report_generator.py # PDF report generation
 \end{lstlisting}
 
 \subsection{Key Components}
 
 \begin{itemize}
-    \item \textbf{model.ipynb}: Jupyter Notebook containing data exploration, preprocessing, feature extraction, training of all four models, evaluation, and model export.
-    \item \textbf{app.py}: Streamlit application that loads the saved model and vectorizer, accepts user input, runs the prediction pipeline, and displays results with credibility scores and explanations.
-    \item \textbf{svm\_model.joblib}: Serialised Linear SVM model wrapped in \texttt{CalibratedClassifierCV}.
-    \item \textbf{tfidf\_vectorizer.joblib}: Fitted TF-IDF vectorizer with 10,000 features.
-    \item \textbf{requirements.txt}: Lists all Python dependencies including \texttt{streamlit}, \texttt{scikit-learn}, \texttt{joblib}, \texttt{pandas}, and \texttt{numpy}.
+    \item \textbf{milestone1/model.ipynb}: Jupyter Notebook containing data exploration, preprocessing, feature extraction, training of all four models (LR, SVM, DT, RF), evaluation, and model export.
+    \item \textbf{milestone1/app.py}: Streamlit application for Milestone 1 that loads the saved model and vectorizer, accepts user input, runs the prediction pipeline, and displays results with credibility scores and explanations.
+    \item \textbf{milestone1/svm\_model.joblib}: Serialised Linear SVM model wrapped in \texttt{CalibratedClassifierCV}.
+    \item \textbf{milestone1/tfidf\_vectorizer.joblib}: Fitted TF-IDF vectorizer with 10,000 features.
+    \item \textbf{milestone2/agent/graph.py}: LangGraph-based agent orchestration managing the workflow of predictor, retriever, reasoner, and report generator.
+    \item \textbf{milestone2/agent/predictor.py}: Credibility predictor component that reuses the Milestone 1 SVM model for initial assessments.
+    \item \textbf{milestone2/agent/retriever.py}: Fact-checking retrieval using web scraping (BeautifulSoup) and semantic search (FAISS + Sentence Transformers).
+    \item \textbf{milestone2/agent/reasoner.py}: AI reasoning component using Groq's Llama 3.1 model for comprehensive credibility analysis.
+    \item \textbf{milestone2/agent/report\_generator.py}: PDF report generation using FPDF library with detailed credibility assessments.
+    \item \textbf{app\_final.py}: Integrated Streamlit application combining both milestones, providing instant predictions and agent-generated reports.
+    \item \textbf{requirements.txt}: Lists all Python dependencies including \texttt{streamlit}, \texttt{scikit-learn}, \texttt{joblib}, \texttt{pandas}, \texttt{numpy}, \texttt{langgraph}, \texttt{groq}, \texttt{sentence-transformers}, \texttt{faiss-cpu}, and \texttt{fpdf}.
 \end{itemize}
 
 \end{document}
