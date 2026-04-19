@@ -24,6 +24,10 @@ if 'article_input' not in st.session_state:
 def clear_input():
     st.session_state.article_input = ""
 
+def reset_session():
+    st.session_state.stats = {"Real": 0, "Fake": 0, "Uncertain": 0, "Total": 0}
+    st.session_state.history = []
+
 
 st.markdown("""
     <style>
@@ -214,10 +218,7 @@ with st.sidebar:
         st.metric("Uncertain", st.session_state.stats["Uncertain"])
     
     st.divider()
-    if st.button("Reset Session History"):
-        st.session_state.stats = {"Real": 0, "Fake": 0, "Uncertain": 0, "Total": 0}
-        st.session_state.history = []
-        st.rerun()
+    st.button("Reset Session History", on_click=reset_session)
 
 
 st.title("News Credibility Analysis")
