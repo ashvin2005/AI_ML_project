@@ -86,8 +86,7 @@ graph TD
 | **ML Engine** | Scikit-learn, Joblib, NLTK |
 | **Agentic Core** | LangGraph, LangChain, Groq Cloud |
 | **Models** | Linear SVM (Base), Llama 3.1 70B (Reasoning) |
-| **RAG / Search** | DuckDuckGo Search API, FAISS |
-| **Reporting** | FPDF2 |
+| **RAG / Search** |FAISS |
 
 ---
 
