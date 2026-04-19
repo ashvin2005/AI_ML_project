@@ -101,7 +101,6 @@ class FactCheckRetriever:
             raw = self._scrape(url)
             if raw:
                 chunks.extend(self._chunk_text(raw, url))
-            time.sleep(0.3)
 
         if not chunks:
             return []

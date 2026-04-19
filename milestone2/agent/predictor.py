@@ -2,7 +2,7 @@ import os
 import re
 import joblib
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MODEL_PATH = os.path.join(BASE_DIR, "milestone1", "svm_model.joblib")
 VECTORIZER_PATH = os.path.join(BASE_DIR, "milestone1", "tfidf_vectorizer.joblib")
 

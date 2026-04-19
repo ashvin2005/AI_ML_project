@@ -112,8 +112,11 @@ def build_agent():
     g.add_node("reason", reason_node)
     g.add_node("report", report_node)
 
-    g.set_entry_point("predict")
-    g.add_edge("predict", "retrieve")
+    from langgraph.graph import START, END
+    
+    g.add_edge(START, "predict")
+    g.add_edge(START, "retrieve")
+    g.add_edge("predict", "reason")
     g.add_edge("retrieve", "reason")
     g.add_edge("reason", "report")
     g.add_edge("report", END)

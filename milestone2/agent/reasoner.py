@@ -37,7 +37,7 @@ class CredibilityReasoner:
         if not api_key:
             raise ValueError("GROQ_API_KEY not found. Add it to your .env file.")
         self.client = Groq(api_key=api_key)
-        self.model = "llama3-8b-8192"
+        self.model = "llama-3.1-8b-instant"
 
     def analyze(self, article_text: str, prediction: dict, retrieval: dict) -> dict:
         sources_text = "\n".join(
@@ -77,7 +77,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
   "misinformation_warning": "<specific warning if misinformation detected, else empty string>"
 }}
 
-Rules: base verdict on article + ML result; don't invent facts; use UNCERTAIN if article is ambiguous; keep lists to 2-4 items."""
+Rules: base verdict on article + ML result; don't invent facts; if the article is too short, highly biased, or lacks verifiable claims, label as UNCERTAIN and specify "Incomplete/Unreliable Content" in the reasoning; keep lists to 2-4 items."""
 
         try:
             resp = self.client.chat.completions.create(
